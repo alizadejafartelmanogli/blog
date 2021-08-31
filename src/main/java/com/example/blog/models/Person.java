@@ -2,11 +2,9 @@ package com.example.blog.models;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import org.hibernate.validator.constraints.UniqueElements;
 
+import javax.persistence.*;
 
 
 @MappedSuperclass
@@ -18,9 +16,12 @@ public abstract class Person {
 
     @NotEmpty(message = "Name should not be empty")
     private String name;
+
     @NotEmpty(message = "Email should not be empty")
     @Email(message = "Email should be valid")
+    @Column(unique = true)
     private String email;
+
     @NotEmpty(message = "Password should not be empty")
     private String password;
 

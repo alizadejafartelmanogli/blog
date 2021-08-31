@@ -1,13 +1,17 @@
 package com.example.blog.models;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class User extends Person {
+
+    @Enumerated(value = EnumType.STRING)
+    private Role role = Role.USER;
+
+    @Enumerated(value = EnumType.STRING)
+    private Status status = Status.ACTIVE;
+
 
     public User(String name, String email, String password) {
         super(name, email, password);
@@ -28,4 +32,19 @@ public class User extends Person {
         this.userPosts = userPosts;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }
