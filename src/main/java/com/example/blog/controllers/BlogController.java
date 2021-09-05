@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
+@RequestMapping("/blog")
 public class BlogController {
 
     private final PostRepository postRepository;
@@ -21,28 +22,30 @@ public class BlogController {
         this.postRepository = postRepository;
     }
 
-    @GetMapping("/blog")
+    @GetMapping
     public String blogMain(Model model){
         Iterable<Post> posts = postRepository.findAll();
         model.addAttribute("posts", posts);
-        return "blog/blog-main";
+        return "blogs/blog-main";
     }
 
-    @GetMapping("/blog/add")
+    @GetMapping("/add")
+    @PreAuthorize("hasAuthority('developers:write')")
     public String blogAdd(@ModelAttribute ("post") Post post){
-        return "blog/blog-add";
+        return "blogs/blog-add";
     }
 
-    @PostMapping("/blog/add")
+    @PostMapping("/add")
+    @PreAuthorize("hasAuthority('developers:write')")
     public String blogPostAdd(@ModelAttribute ("post") @Validated Post post,
                               BindingResult bindingResult){
         if (bindingResult.hasErrors())
-            return "blog/blog-add";
+            return "blogs/blog-add";
         postRepository.save(post);
         return "redirect:/blog";
     }
 
-    @GetMapping("/blog/{id}")
+    @GetMapping("/{id}")
     public String blogDetails(@PathVariable(value = "id") long id, Model model){
         if (!postRepository.existsById(id))
             return "redirect:/blog";
@@ -50,30 +53,32 @@ public class BlogController {
         post.setViews(post.getViews()+1);
         postRepository.save(post);
         model.addAttribute("post", post);
-        return "blog/blog-details";
+        return "blogs/blog-details";
     }
 
-    @GetMapping("blog/{id}/edit")
+    @GetMapping("/{id}/edit")
+    @PreAuthorize("hasAuthority('developers:write')")
     public String blogEdit(Model model, @PathVariable("id") long id) {
         model.addAttribute("post", postRepository.findById(id).orElseThrow());
-        return "blog/blog-edit";
+        return "blogs/blog-edit";
     }
 
-    @PostMapping("/blog/{id}/edit")
+    @PostMapping("/{id}/edit")
+    @PreAuthorize("hasAuthority('developers:write')")
     public String blogPostUpdate(@PathVariable(value = "id") long id,
                                  @ModelAttribute ("post") @Validated Post post,
                                  BindingResult bindingResult){
         if (bindingResult.hasErrors())
-            return "blog/blog-edit";
+            return "blogs/blog-edit";
         Post postOld = postRepository.findById(id).orElseThrow();
         postOld.setTittle(post.getTittle());
         postOld.setAnons(post.getAnons());
         postOld.setText(post.getText());
-        postRepository.save(post);
+        postRepository.save(postOld);
         return "redirect:/blog";
     }
 
-    @PostMapping("/blog/{id}/remove")
+    @PostMapping("/{id}/edit/delete")
     @PreAuthorize("hasAuthority('developers:write')")
     public String blogPostDelete(@PathVariable(value = "id") long id){
         Post post = postRepository.findById(id).orElseThrow();

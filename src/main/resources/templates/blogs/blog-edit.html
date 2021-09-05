@@ -24,6 +24,10 @@
 
       <button type="submit" class="btn btn-success">Обновить</button>
 
+      <form th:action="'/blog/' + ${post.id} + '/edit/delete'" method="post">
+        <button type="submit" class="btn btn-warning">Удалить</button>
+      </form>
+
     </form>
 </div>
 </div>

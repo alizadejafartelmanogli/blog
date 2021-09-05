@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -21,9 +22,8 @@ public class Post {
     private String text;
     private int views;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "userId")
-    private User user;
+    @ManyToMany
+    private List<User> users;
 
     public Post(String tittle, String anons, String text) {
         this.tittle = tittle;
@@ -74,11 +74,11 @@ public class Post {
         this.views = views;
     }
 
-    public User getUser() {
-        return user;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(List<User> user) {
+        this.users = users;
     }
 }

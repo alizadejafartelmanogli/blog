@@ -9,13 +9,13 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container mt-5">
-    <div th:each="elementUser : ${user}" class="alert alert-info mt-2">
-        <h3 th:text="${elementUser.name}"/>
-        <!--<div th:each="elementPost : ${userPosts}" class="alert alert-info mt-2">
-            <h3 th:text="${elementPost.tittle}"/>
-            <p th:text="${elementPost.anons}"/>
-            <a th:href="'/blog/' + ${elementPost.id}" class="btn btn-warning">Детальнее</a>
-        </div>-->
+    <div th:each="element : ${post}" class="alert alert-info mt-2">
+        <h3 th:text="${element.tittle}"/>
+        <h3 th:text="${element.text}"/>
+        <p><b>Просмотры: </b><h3 th:text="${element.views}"/></p>
+        <form th:action="'/blog/' + ${element.id} + '/add_to_me'" method="post">
+            <button type="submit" class="btn btn-warning">Добавить к себе</button>
+        </form>
     </div>
 </div>
 
