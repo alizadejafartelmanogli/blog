@@ -45,6 +45,7 @@ public class PostsOfUserController {
         return "users/user-posts";
     }
 
+
     @PostMapping("/users/posts/{id}/delete")
     public String userPostsDelete(@PathVariable("id") long id, Principal principal){
         User user = userRepository.findByEmail(principal.getName()).orElseThrow();
