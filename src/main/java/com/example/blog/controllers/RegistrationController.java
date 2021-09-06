@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
+
 @Controller
 public class RegistrationController {
 
@@ -31,6 +33,13 @@ public class RegistrationController {
         if (bindingResult.hasErrors())
             return "registration";
         userRepository.save(user);
+        return "redirect:/blog";
+    }
+
+    @PostMapping("/my_posts/delete")
+    public String deleteAccount(Principal principal){
+        User user = userRepository.findByEmail(principal.getName()).orElseThrow();
+        userRepository.delete(user);
         return "redirect:/";
     }
 }

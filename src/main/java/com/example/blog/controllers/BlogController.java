@@ -77,13 +77,5 @@ public class BlogController {
         postRepository.save(postOld);
         return "redirect:/blog";
     }
-
-    @PostMapping("/{id}/edit/delete")
-    @PreAuthorize("hasAuthority('developers:write')")
-    public String blogPostDelete(@PathVariable(value = "id") long id){
-        Post post = postRepository.findById(id).orElseThrow();
-        postRepository.delete(post);
-        return "redirect:/blog";
-    }
 }
 

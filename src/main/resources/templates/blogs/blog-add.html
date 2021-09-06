@@ -21,6 +21,12 @@
     <textarea th:field="*{text}" id="text" placeholder="Текст статьи" class="form-control"></textarea>
     <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}" class="error">Text Error</div>
 
+    <form enctype="multipart/form-data" method="post">
+      <p>Загрузите ваши фотографии на сервер</p>
+      <p><input type="file" name="photo" multiple accept="image/*,image/jpeg">
+        <input type="submit" value="Отправить"></p>
+    </form>
+
     <button type="submit" class="btn btn-success">Добавить статью</button>
   </form>
 </div>

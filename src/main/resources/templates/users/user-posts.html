@@ -12,11 +12,14 @@
     <div th:each="elementUser : ${user}" class="alert alert-info mt-2">
         <h3 th:text="${elementUser.name}"/>
         <h6 th:text="${elementUser.email}"/>
+        <form th:action="'/my_posts/delete'" method="post">
+            <button type="submit" class="btn btn-warning">Удалить аккаунт</button>
+        </form>
         <div th:each="post : ${elementUser.posts}" class="alert alert-info mt-2">
             <h6 th:text="${post.tittle}"/>
             <h6 th:text="${post.anons}"/>
-            <a th:href="'/blog/' + ${post.id}" class="btn btn-warning">Детальнее</a>
-            <form th:action="'/users/posts/' + ${post.id} + '/delete'" method="post">
+            <a th:href="'/blog/' + ${post.id}" class="btn btn-warning">Детальнее</a><br><br>
+            <form th:action="'/my_posts/' + ${post.id} + '/delete'" method="post">
                 <button type="submit" class="btn btn-warning">Удалить</button>
             </form>
         </div>

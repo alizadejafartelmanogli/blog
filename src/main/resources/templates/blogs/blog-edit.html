@@ -23,10 +23,8 @@
       <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}" class="error">Text Error</div>
 
       <button type="submit" class="btn btn-success">Обновить</button>
+      <a th:href="'/blog/' + ${post.id} + '/edit/delete'" class="btn btn-warning">Удалить</a>
 
-      <form th:action="'/blog/' + ${post.id} + '/edit/delete'" method="post">
-        <button type="submit" class="btn btn-warning">Удалить</button>
-      </form>
 
     </form>
 </div>
