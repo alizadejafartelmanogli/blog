@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Блог сайта</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Мой аккаунт</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
 </head>
 <body>
@@ -12,9 +12,7 @@
     <div th:each="elementUser : ${user}" class="alert alert-info mt-2">
         <h3 th:text="${elementUser.name}"/>
         <h6 th:text="${elementUser.email}"/>
-        <form th:action="'/my_posts/delete'" method="post">
-            <button type="submit" class="btn btn-warning">Удалить аккаунт</button>
-        </form>
+
         <div th:each="post : ${elementUser.posts}" class="alert alert-info mt-2">
             <h6 th:text="${post.tittle}"/>
             <h6 th:text="${post.anons}"/>

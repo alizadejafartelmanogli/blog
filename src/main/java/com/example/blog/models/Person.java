@@ -2,7 +2,6 @@ package com.example.blog.models;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 

@@ -2,6 +2,7 @@ package com.example.blog.security;
 
 import com.example.blog.models.Status;
 import com.example.blog.models.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,15 +10,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@Data
 public class SecurityUser implements UserDetails {
 
-    private final String email;
+    private final String username;
     private final String password;
     private final List<SimpleGrantedAuthority> authorities;
     private final boolean isActive;
 
-    public SecurityUser(String email, String password, List<SimpleGrantedAuthority> authorities, boolean isActive) {
-        this.email = email;
+    public SecurityUser(String username, String password, List<SimpleGrantedAuthority> authorities, boolean isActive) {
+        this.username = username;
         this.password = password;
         this.authorities = authorities;
         this.isActive = isActive;
@@ -35,7 +37,7 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
@@ -58,7 +60,7 @@ public class SecurityUser implements UserDetails {
         return isActive;
     }
 
-    public static UserDetails fromUser(User user){
+    public static UserDetails fromUser(User user) {
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(), user.getPassword(),
                 user.getStatus().equals(Status.ACTIVE),
@@ -68,5 +70,4 @@ public class SecurityUser implements UserDetails {
                 user.getRole().getAuthorities()
         );
     }
-
 }

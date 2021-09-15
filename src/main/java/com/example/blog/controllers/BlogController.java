@@ -23,7 +23,7 @@ public class BlogController {
     }
 
     @GetMapping
-    public String blogMain(Model model){
+    public String blogMain(Model model) {
         Iterable<Post> posts = postRepository.findAll();
         model.addAttribute("posts", posts);
         return "blogs/blog-main";
@@ -31,14 +31,14 @@ public class BlogController {
 
     @GetMapping("/add")
     @PreAuthorize("hasAuthority('developers:write')")
-    public String blogAdd(@ModelAttribute ("post") Post post){
+    public String blogAdd(@ModelAttribute("post") Post post) {
         return "blogs/blog-add";
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('developers:write')")
-    public String blogPostAdd(@ModelAttribute ("post") @Validated Post post,
-                              BindingResult bindingResult){
+    public String blogPostAdd(@ModelAttribute("post") @Validated Post post,
+                              BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "blogs/blog-add";
         postRepository.save(post);
@@ -46,11 +46,9 @@ public class BlogController {
     }
 
     @GetMapping("/{id}")
-    public String blogDetails(@PathVariable(value = "id") long id, Model model){
-        if (!postRepository.existsById(id))
-            return "redirect:/blog";
+    public String blogDetails(@PathVariable(value = "id") long id, Model model) {
         Post post = postRepository.findById(id).orElseThrow();
-        post.setViews(post.getViews()+1);
+        post.setViews(post.getViews() + 1);
         postRepository.save(post);
         model.addAttribute("post", post);
         return "blogs/blog-details";
@@ -66,8 +64,8 @@ public class BlogController {
     @PostMapping("/{id}/edit")
     @PreAuthorize("hasAuthority('developers:write')")
     public String blogPostUpdate(@PathVariable(value = "id") long id,
-                                 @ModelAttribute ("post") @Validated Post post,
-                                 BindingResult bindingResult){
+                                 @ModelAttribute("post") @Validated Post post,
+                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "blogs/blog-edit";
         Post postOld = postRepository.findById(id).orElseThrow();

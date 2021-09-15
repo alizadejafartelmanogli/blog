@@ -8,12 +8,12 @@ public class User extends Person {
 
     @Enumerated(value = EnumType.STRING)
     private Role role = Role.USER;
-
     @Enumerated(value = EnumType.STRING)
     private Status status = Status.ACTIVE;
-
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Post> posts;
+    @OneToMany
+    private List<Comment> comments;
 
     public User(String name, String email, String password) {
         super(name, email, password);
@@ -44,5 +44,13 @@ public class User extends Person {
 
     public void setPosts(List<Post> userPosts) {
         this.posts = posts;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

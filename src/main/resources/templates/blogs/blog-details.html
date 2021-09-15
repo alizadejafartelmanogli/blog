@@ -2,23 +2,36 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Блог сайта</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
 </head>
 <body>
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container mt-5">
-    <div th:each="element : ${post}" class="alert alert-info mt-2">
-        <h3 th:text="${element.tittle}"/>
-        <h3 th:text="${element.text}"/>
-        <p><b>Просмотры: </b><h3 th:text="${element.views}"/></p>
-        <form th:action="'/blog/' + ${element.id} + '/add_to_me'" method="post">
+    <div class="alert alert-info mt-2">
+        <h3 th:text="${post.tittle}"/>
+        <h6 th:text="${post.text}"/>
+        <p><b>Просмотры: </b>
+        <h3 th:text="${post.views}"/></p>
+        <form th:action="'/blog/' + ${post.id} + '/add_to_me'" method="post">
             <button type="submit" class="btn btn-warning">Добавить к себе</button>
         </form>
-    </div>
-</div>
+        <br>
 
-<div th:insert="blocks/footer :: footer"></div>
+        <form th:action="'/blog/' + ${post.id} + '/add-comment'" method="post">
+            <input type="text" name="text" placeholder="Введите текст комментария" class="form-control">
+            <button type="submit" class="btn btn-success">Добавить комментарий</button>
+        </form>
+        <br>
+
+        <h6>Комментарии:</h6>
+        <div th:each="comment : ${post.comments}" class="alert alert-info mt-2 mb-5">
+            <p th:text="${comment.user.name}"/>
+            <p th:text="${comment.text}"/>
+        </div>
+    </div>
+
+    <div th:insert="blocks/footer :: footer"></div>
 </body>
 </html>

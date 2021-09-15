@@ -21,7 +21,8 @@ public class Post {
     @Length(min = 2, max = 500, message = "Text should be between 10 and 500 characters")
     private String text;
     private int views;
-
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
     @ManyToMany
     private List<User> users;
 
@@ -80,5 +81,13 @@ public class Post {
 
     public void setUsers(List<User> user) {
         this.users = users;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
